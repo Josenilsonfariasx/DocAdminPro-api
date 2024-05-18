@@ -22,9 +22,11 @@ class User extends Authenticatable implements JWTSubject
     protected $fillable = [
         'name',
         'email',
-        'space_used',
         'password',
-        ''
+        'space_used',
+        'can_reset_password',
+        'password_reset_token',
+        'password_reset_token_created_at',
     ];
 
     /**
@@ -34,6 +36,9 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $hidden = [
         'password',
+        'can_reset_password',
+        'password_reset_token',
+        'password_reset_token_created_at',
     ];
 
     /**
@@ -44,7 +49,7 @@ class User extends Authenticatable implements JWTSubject
     protected function casts(): array
     {
         return [
-            'password' => 'hashed'
+            'password' => 'hashed',
         ];
     }
     public function getJWTIdentifier() {
