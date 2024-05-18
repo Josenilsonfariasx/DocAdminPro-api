@@ -5,6 +5,7 @@ use App\Http\Controllers\User\CreateUserController;
 use App\Http\Controllers\User\DeleteUserController;
 use App\Http\Controllers\User\GetUserByIdController;
 use App\Http\Controllers\User\ListAllUsersController;
+use App\Http\Controllers\User\NumberAllUserSystemController;
 use App\Http\Controllers\User\UpdateUserController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,3 +19,4 @@ Route::delete('/{id}',[DeleteUserController::class,'delete']);
 Route::get('/',[ListAllUsersController::class,'listAll']);
 // ----------Filters---------
 Route::get('/filter/{id}',[GetUserByIdController::class,'get']);
+Route::get('/filter/employees/count',[NumberAllUserSystemController::class,'numberUser']); 
