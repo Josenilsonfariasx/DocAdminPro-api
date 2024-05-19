@@ -54,7 +54,7 @@ return [
 
         'stack' => [
             'driver' => 'stack',
-            'channels' => explode(',', env('LOG_STACK', 'single')),
+            'channels' => explode(',', env('LOG_STACK', 'stdout')),
             'ignore_exceptions' => false,
         ],
 
@@ -93,6 +93,16 @@ return [
             ],
             'processors' => [PsrLogMessageProcessor::class],
         ],
+
+        'stdout' =>[
+          'driver' => 'monolog',
+          'level' => env('LOG_LEVEL', 'debug'),
+          'handler' => StreamHandler::class,
+          'formatter' => \Monolog\Formatter\LineFormatter::class,
+          'with' => [
+              'stream' => 'php://stdout',
+          ],
+      ],
 
         'stderr' => [
             'driver' => 'monolog',
