@@ -12,7 +12,7 @@ class Document extends Model
     use HasFactory, Notifiable, HasUuids;
 
     protected $fillable = [
-        'filename',
+        'file_name',
         'file_path',
         'size',
         'user_id',
