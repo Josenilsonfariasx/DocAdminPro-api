@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\User\CreateUserController;
 use App\Http\Controllers\User\DeleteUserController;
+use App\Http\Controllers\User\GetAllDocsByUserController;
 use App\Http\Controllers\User\GetUserByIdController;
 use App\Http\Controllers\User\ListAllUsersController;
 use App\Http\Controllers\User\NumberAllUserSystemController;
@@ -26,6 +27,7 @@ Route::middleware([JwtMiddleware::class])->group(function(){
   Route::group([
       'prefix' => 'filter',
     ], function(){
+      Route::get('/docs/{id}', [GetAllDocsByUserController::class,'handle']);
       Route::get('/employees/count',[NumberAllUserSystemController::class,'numberUser']); 
       Route::get('/{id}',[GetUserByIdController::class,'get']);
     });
