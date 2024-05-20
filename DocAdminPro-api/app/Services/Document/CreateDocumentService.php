@@ -22,8 +22,9 @@ class CreateDocumentService {
       }
     
       $sizeInMB = round($data['size'] / 1048576, 1);
-      
+      $filePath = storage_path('app/' . $data['path_name']);
       if ($userFound->space_used + $sizeInMB > 2048) {
+        unlink($filePath);
         throw new AppError('Storage limit exceeded. Each user can only use up to 2GB of storage.', 400);
       }
       // Criar um novo documento
