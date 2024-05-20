@@ -24,9 +24,10 @@ class CreateDocumentController extends Controller{
       }
 
       $file->storeAs($destinationPath, $fileName);
+      $rename = $rename ?? false;
 
       $data = [
-        'rename' => $rename ? $rename : false,
+        'rename' => $rename,
         'pdf' => $file,
         'type' => 'pdf',
         'file_name' => $fileName,
