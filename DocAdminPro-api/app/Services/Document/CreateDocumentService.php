@@ -40,6 +40,10 @@ class CreateDocumentService {
 
       // Colocar o job na fila com o caminho do arquivo
       dispatch(new ProcessDocumentJob($document->id));
-      return $document;
+      $dataObj = [
+        'document'=>$document,
+        'rename' => $data['rename']
+      ];
+      return $dataObj;
     }
 }
