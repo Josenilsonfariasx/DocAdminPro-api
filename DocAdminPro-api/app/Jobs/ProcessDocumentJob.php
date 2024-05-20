@@ -51,6 +51,10 @@ class ProcessDocumentJob implements ShouldQueue
         unlink($imgPath);
       }
 
+      // Remover acentos e converter para minúsculas
+      $content = iconv('UTF-8', 'ASCII//TRANSLIT', $content);
+      $content = mb_strtolower($content);
+
       // Salvar o conteúdo OCR no documento
       $docUpdated = Document::where('id', $this->id)->update([
         'content' => $content,
