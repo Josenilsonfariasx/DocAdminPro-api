@@ -2,6 +2,7 @@
 // Routes
 
 use App\Http\Controllers\Document\GetUploadsPerDayController;
+use App\Http\Controllers\Document\SearchDocumentController;
 use App\Http\Controllers\User\CreateUserController;
 use App\Http\Controllers\User\DeleteUserController;
 use App\Http\Controllers\User\GetAllDocsByUserController;
@@ -35,5 +36,6 @@ Route::middleware([JwtMiddleware::class])->group(function(){
       Route::get('/docs/{id}', [GetAllDocsByUserController::class,'handle']);
       Route::get('/employees/count',[NumberAllUserSystemController::class,'numberUser']); 
       Route::get('/{id}',[GetUserByIdController::class,'get']);
+      Route::get('docs/search/{id}',[SearchDocumentController::class,'handle']);
     });
 });
