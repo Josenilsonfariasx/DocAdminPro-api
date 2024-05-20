@@ -1,6 +1,7 @@
 <?php
 // Routes
 
+use App\Http\Controllers\Document\GetUploadsPerDayController;
 use App\Http\Controllers\User\CreateUserController;
 use App\Http\Controllers\User\DeleteUserController;
 use App\Http\Controllers\User\GetAllDocsByUserController;
@@ -30,6 +31,7 @@ Route::middleware([JwtMiddleware::class])->group(function(){
   Route::group([
     'prefix' => 'filter',
   ], function(){
+      Route::get('/docs/dash/{id}',[GetUploadsPerDayController::class,'handle']);
       Route::get('/docs/{id}', [GetAllDocsByUserController::class,'handle']);
       Route::get('/employees/count',[NumberAllUserSystemController::class,'numberUser']); 
       Route::get('/{id}',[GetUserByIdController::class,'get']);
