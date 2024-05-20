@@ -22,7 +22,10 @@ class CreateDocumentService {
       }
     
       $sizeInMB = round($data['size'] / 1048576, 1);
-
+      
+      if ($userFound->space_used + $sizeInMB > 2048) {
+        throw new AppError('Storage limit exceeded. Each user can only use up to 2GB of storage.', 400);
+      }
       // Criar um novo documento
       $document = Document::create([
         'user_id' => $id,
