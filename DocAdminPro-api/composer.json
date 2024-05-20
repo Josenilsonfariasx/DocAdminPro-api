@@ -7,7 +7,10 @@
     "require": {
         "php": "^8.2",
         "laravel/framework": "^11.0",
+        "laravel/horizon": "^5.24",
         "laravel/tinker": "^2.9",
+        "spatie/pdf-to-image": "^2.3",
+        "thiagoalessio/tesseract_ocr": "^2.13",
         "tymon/jwt-auth": "^2.1"
     },
     "require-dev": {
