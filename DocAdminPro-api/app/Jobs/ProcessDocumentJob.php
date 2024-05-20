@@ -41,12 +41,14 @@ class ProcessDocumentJob implements ShouldQueue
 
       // Loop através de cada página e convertê-la em uma imagem
       for ($i = 1; $i <= $totalPages; $i++) {
-        $imgPath = storage_path('app/' . $relativePath . '_' . $i . '.jpg');
+        $imgPath = storage_path('app/pdfs-to-image' . $relativePath . '_' . $i . '.jpg');
         $pdf->setPage($i)->saveImage($imgPath);
 
         // Realizar OCR na imagem
         $text = (new TesseractOCR($imgPath))->run();
-        $content = $text;
+        $content .= $text;
+        // apagar a imagem
+        unlink($imgPath);
       }
 
       // Salvar o conteúdo OCR no documento
