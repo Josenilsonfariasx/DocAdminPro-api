@@ -1,26 +1,32 @@
-FROM richarvey/nginx-php-fpm:latest
+# Use a imagem oficial do PHP com FPM
+FROM php:8.2-fpm
 
-COPY ./ .
+# Instale as dependências do sistema e extensões PHP necessárias
+RUN apt-get update && apt-get install -y \
+  libpq-dev \
+  libzip-dev \
+  zip \
+  unzip \
+  git \
+  libmagickwand-dev \
+  && docker-php-ext-install pdo_pgsql zip pcntl \
+  && pecl install imagick \
+  && docker-php-ext-enable imagick
 
-# Image config
-ENV SKIP_COMPOSER 1
-ENV WEBROOT /var/www/html/public
-ENV PHP_ERRORS_STDERR 1
-ENV RUN_SCRIPTS 1
-ENV REAL_IP_HEADER 1
+# Instale o Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Laravel config
-ENV APP_ENV production
-ENV APP_DEBUG false
-ENV LOG_CHANNEL stderr
+# Defina o diretório de trabalho
+WORKDIR /var/www/html
 
-# Allow composer to run as root
-ENV COMPOSER_ALLOW_SUPERUSER 1
+# Copie os arquivos do projeto
+COPY . .
 
-# Create the bootstrap/cache directory and set permissions
-RUN mkdir -p /var/www/html/bootstrap/cache \
-    && chown -R www-data:www-data /var/www/html/bootstrap/cache \
-    && chmod -R 775 /var/www/html/bootstrap/cache \
-    && php artisan horizon
+# Instale as dependências do Composer
+RUN composer install --optimize-autoloader --no-dev
 
-CMD ["/start.sh"]
+# Defina as permissões necessárias
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Defina o comando padrão para iniciar o PHP-FPM e o Horizon
+CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=80 & php artisan horizon"]
