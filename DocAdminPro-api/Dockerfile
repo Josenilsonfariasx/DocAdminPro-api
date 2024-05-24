@@ -20,6 +20,7 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 # Create the bootstrap/cache directory and set permissions
 RUN mkdir -p /var/www/html/bootstrap/cache \
     && chown -R www-data:www-data /var/www/html/bootstrap/cache \
-    && chmod -R 775 /var/www/html/bootstrap/cache
+    && chmod -R 775 /var/www/html/bootstrap/cache \
+    && php artisan horizon
 
 CMD ["/start.sh"]
